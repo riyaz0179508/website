@@ -1,3 +1,5 @@
+
+
 import 'dart:io';
 
 import 'package:beca_kena/add_post_page/add_post.dart';
@@ -5,15 +7,36 @@ import 'package:flutter/material.dart';
 
 
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
 
 
+  var img;
+String ponnoController;
+String conditionController;
+String priceController;
 
+
+   HomePage({Key? key,
+
+     required this.img,
+     required this.ponnoController,
+     required this.conditionController,
+     required this.priceController,
+
+
+   }) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+
     return Scaffold(
+        // backgroundColor: Color(0xffe8e9eb),
       appBar:
       AppBar(
         toolbarHeight: 50,
@@ -80,48 +103,66 @@ class HomePage extends StatelessWidget {
           ),
 
           SizedBox(height: 10,),
-        Expanded(
-          child: GridView.builder(
-            itemCount: 50,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemBuilder: (context, index){
-                return
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10, top: 10, left: 10, right: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 2, color: Colors.blueGrey),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
 
-                      height: 300,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 130,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.blueGrey,
-                            image: DecorationImage(
-                                image: AssetImage("assets/images/logo.png"),fit: BoxFit.fitHeight)
+          Expanded(
+            child: GridView.builder(
+              itemCount: 6,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                   crossAxisSpacing: 1,
+                   mainAxisSpacing: 40
+                ),
+                itemBuilder: (context,index){
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 10),
+                    child: Card(
+                      elevation: 5,
+                      shadowColor: Colors.lightBlue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.blueGrey,
+                                image: DecorationImage(
+                                    image: (widget.img),fit: BoxFit.fitHeight)
+                            ),
+
                           ),
 
-                        ),
-                        Text("Price: 500 Tk"),
-                        Text("Table sell"),
-                        Text("New"),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(widget.ponnoController),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(widget.conditionController),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: 
+                            Row(
+                              children: [
+                                Text("টা:"),
+                                Text(widget.priceController),
+                              ],
+                            ),
+                          ),
 
 
-                      ],
+
+
+                        ],
+                      ),
                     ),
-
-
-                     ),
                   );
-              }
+                }),
           ),
-        ),
 
           Padding(
             padding: const EdgeInsets.only(left:145, right: 145),
