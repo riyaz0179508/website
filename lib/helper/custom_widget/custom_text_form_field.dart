@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
   TextEditingController emailController;
-  String labelText;
+  String hintText;
+  bool obsecureValue;
    CustomTextField({Key? key,
 
     required this.emailController,
-    required this.labelText,
+    required this.hintText,
+     required this.obsecureValue
+
+
 
   }) : super(key: key);
 
@@ -22,9 +26,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
       Padding(
         padding: const EdgeInsets.only(right: 20, left: 20),
         child: TextFormField(
+          validator: (value){
+            if(value == null || value.isEmpty){
+              return "Field is Empty";
+            }
+
+          },
+          obscureText: widget.obsecureValue,
         controller: widget.emailController,
           decoration: InputDecoration(
-            labelText: widget.labelText,
+            labelText: widget.hintText,
             labelStyle: TextStyle(color: allColor.iconColor),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: allColor.iconColor),

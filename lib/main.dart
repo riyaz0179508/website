@@ -1,5 +1,6 @@
 
 import 'package:beca_kena/screen/home_page.dart';
+import 'package:beca_kena/screen/my_home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,14 +13,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(
+      home: MyHomePage()
 
-        img: "",
-        ponnoController: "",
-        conditionController: "",
-        priceController: "",
-
-      ),
+      // HomePage(
+      //   img: "",
+      //   ponnoController: "",
+      //   conditionController: "",
+      //   priceController: "",
+      //
+      // ),
     );
   }
 }
