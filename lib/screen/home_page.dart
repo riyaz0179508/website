@@ -1,15 +1,15 @@
 
 
 import 'dart:io';
-
-import 'package:beca_kena/add_post_page/add_post.dart';
 import 'package:flutter/material.dart';
+
+import 'add_post_page/add_post.dart';
 
 
 
 class HomePage extends StatefulWidget {
 
-
+TextEditingController? emailController;
   var img;
 String ponnoController;
 String conditionController;
@@ -17,6 +17,8 @@ String priceController;
 
 
    HomePage({Key? key,
+
+
 
      required this.img,
      required this.ponnoController,
