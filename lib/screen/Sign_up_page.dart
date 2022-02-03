@@ -1,7 +1,9 @@
 import 'package:beca_kena/helper/custom_widget/custom_button.dart';
 import 'package:beca_kena/helper/custom_widget/custom_text_form_field.dart';
 import 'package:beca_kena/helper/login_page/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -9,7 +11,7 @@ class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
-
+final _auth= FirebaseAuth.instance;
 final GlobalKey<FormState> _formKey =GlobalKey();
 TextEditingController _emailController=TextEditingController();
 TextEditingController _passController=TextEditingController();
@@ -49,8 +51,8 @@ class _SignUpPageState extends State<SignUpPage> {
             SizedBox(height: 20,),
             InkWell(
               onTap: (){
-                if(_formKey.currentState!.validate());
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
+                signUp(_emailController.text,
+                    _passController.text, context);
               },
               child: CustomButton(
                 height: 50,
@@ -70,4 +72,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
     );
   }
+}
+
+void signUp(String email, String password, context )async{
+  if(_formKey.currentState!.validate()){
+    await _auth.createUserWithEmailAndPassword(
+        email: email, password: password).then((value) => {
+      Fluttertoast.showToast(msg: "Sign Up Successful"),
+    }).catchError((e){
+      Fluttertoast.showToast(msg: e.massage);
+    });
+  }
+
+
 }
