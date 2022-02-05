@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'add_post_page/add_post.dart';
+import 'add_post.dart';
 
 
 

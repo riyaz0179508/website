@@ -1,8 +1,8 @@
-import 'package:beca_kena/helper/custom_widget/custom_button.dart';
-import 'package:beca_kena/helper/custom_widget/custom_text_form_field.dart';
+import 'package:beca_kena/helper/custom_button.dart';
+import 'package:beca_kena/helper/custom_text_form_field.dart';
 import 'package:beca_kena/screen/Sign_up_page.dart';
 import 'package:beca_kena/screen/home_page.dart';
-import 'package:beca_kena/utils/all_color/color.dart';
+import 'package:beca_kena/helper/color.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -57,13 +57,16 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     SizedBox(height: 50,),
+
+
+
                     CustomTextField(
                       emailController: _emailController,
                       hintText: "Enter your Email",
                       obsecureValue: false,
                     ),
-
                     SizedBox(height: 20,),
+
                     CustomTextField(
                       emailController: _passController,
                       hintText: "Enter Password",

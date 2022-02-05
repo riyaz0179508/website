@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:alert_dialog/alert_dialog.dart';
-import 'package:beca_kena/helper/custom_widget/custom_button.dart';
-import 'package:beca_kena/helper/custom_widget/custom_text_form_field.dart';
-import 'package:beca_kena/helper/login_page/login_page.dart';
+import 'package:beca_kena/helper/custom_button.dart';
+import 'package:beca_kena/helper/custom_text_form_field.dart';
 import 'package:beca_kena/model_provider_repo/model/user_model.dart';
+import 'package:beca_kena/screen/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -29,7 +29,6 @@ File? image;
 
 
 String ? initValDept;
-String ? initValBloodGroup;
 
 class _SignUpPageState extends State<SignUpPage> {
 
@@ -240,7 +239,13 @@ void signUp(String email, String password,
       Fluttertoast.showToast(msg: "SignUp Successful!"),
       Navigator.push(context,
           MaterialPageRoute(
-              builder: (context)=>LoginPage()))
+              builder: (context)=>HomePage(
+                img: "",
+                ponnoController: "",
+                conditionController: "",
+                priceController: "",
+
+              )))
     }).catchError((e){
       Fluttertoast.showToast(msg:e.message);
 
@@ -270,7 +275,7 @@ void saveUserDetails() async{
   userModel.email= _emailController.text;
   userModel.phone= _phoneController.text;
   userModel.name= _nameController.text;
-  userModel.dept= initValDept;
+  // userModel.dept= initValDept;
 
 
   await firestore123.collection("users").

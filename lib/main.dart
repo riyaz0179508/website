@@ -1,5 +1,5 @@
 
-import 'package:beca_kena/helper/login_page/login_page.dart';
+import 'package:beca_kena/screen/login_page.dart';
 import 'package:beca_kena/screen/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

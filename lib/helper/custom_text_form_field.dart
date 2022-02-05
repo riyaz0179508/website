@@ -1,4 +1,4 @@
-import 'package:beca_kena/helper/login_page/login_page.dart';
+import 'package:beca_kena/screen/login_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
