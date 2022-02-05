@@ -1,6 +1,6 @@
 
 
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'add_post_page/add_post.dart';
@@ -132,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(8),
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: (widget.img),fit: BoxFit.fitHeight)
+                                    image: AssetImage("assets/images/logo.png"),fit: BoxFit.fitHeight)
                             ),
 
                           ),

@@ -1,11 +1,15 @@
 
+import 'package:beca_kena/helper/login_page/login_page.dart';
 import 'package:beca_kena/screen/home_page.dart';
-import 'package:beca_kena/screen/my_home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() async{
+
+Future <void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   runApp( MyApp());
 }
@@ -18,15 +22,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage()
+      home:
+      FirebaseAuth.instance.currentUser==null?
+      LoginPage():
+      HomePage(
+        img: "",
+        ponnoController: "",
+        conditionController: "",
+        priceController: "",
 
-      // HomePage(
-      //   img: "",
-      //   ponnoController: "",
-      //   conditionController: "",
-      //   priceController: "",
-      //
-      // ),
+      ),
     );
   }
 }

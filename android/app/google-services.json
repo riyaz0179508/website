@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "516824634475",
+    "project_id": "beca-kena-final",
+    "storage_bucket": "beca-kena-final.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516824634475:android:2b48d53193b283876d4d2e",
+        "android_client_info": {
+          "package_name": "com.example.beca_kena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516824634475-tkfdmnk6357dfr48e325m4vq72fv8n43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe3z1E2th1eG20zcN0VxruSmkW5A575OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516824634475-tkfdmnk6357dfr48e325m4vq72fv8n43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
