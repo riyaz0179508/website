@@ -2,14 +2,15 @@
 import 'dart:io';
 import 'dart:ui';
 import 'package:alert_dialog/alert_dialog.dart';
-import 'package:beca_kena/model_provider_repo/model/user_model.dart';
-import 'package:beca_kena/screen/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../model_provider_repo/model/user_model.dart';
+import 'home_page.dart';
 
 class AddPost extends StatefulWidget {
   const AddPost({Key? key}) : super(key: key);
@@ -36,6 +37,8 @@ List<String> categorytList=[
 String ? initValDept;
 final _auth= FirebaseAuth.instance;
 final GlobalKey<FormState> _formKey =GlobalKey();
+TextEditingController _emailController=TextEditingController();
+TextEditingController _passController=TextEditingController();
 
 TextEditingController _locationController=TextEditingController();
 TextEditingController _sellertNameController=TextEditingController();
@@ -623,7 +626,12 @@ class _AddPostState extends State<AddPost> {
                           primary: Colors.green
                         ),
                           onPressed: (){
-                            Submit;
+                            Submit(
+                                _emailController.text,
+                                _passController.text,
+                                context,
+                                _formKey
+                            );
                           },
                           child: Text("সাবমিট পোষ্ট")
                       ),
@@ -645,13 +653,14 @@ class _AddPostState extends State<AddPost> {
 }
 
 
+
 void Submit(String email, String password,
     context,_formKey)async{
   if(_formKey.currentState!.validate() && image3!=null){
     await _auth.createUserWithEmailAndPassword
       (email: email, password: password)
         .then((value) => {
-      productDetails(),
+      saveUserDetails(),
       saveImage(),
       Navigator.push(context,
           MaterialPageRoute(
@@ -678,13 +687,13 @@ void saveImage()async{
 }
 
 
-void productDetails() async{
-  FirebaseFirestore firestore124=
+void saveUserDetails() async{
+  FirebaseFirestore firestore123=
       FirebaseFirestore.instance;
-  User? product= _auth.currentUser;
+  User? user= _auth.currentUser;
 
   UserModel userModel=UserModel();
-  userModel.uid=product!.uid;
+  userModel.uid=user!.uid;
   userModel.sellerLocation= _locationController.text;
   userModel.sellerName= _sellertNameController.text;
   userModel.sellerAddress= _addressController.text;
@@ -694,12 +703,10 @@ void productDetails() async{
   userModel.sellerPrice= _priceController.text;
   userModel.sellerDescription= _descriptionController.text;
 
-
-
-  await firestore124.collection("products").
+  await firestore123.collection("users").
   doc(initValDept)
-      .collection('Product')
-      .doc(product.uid)
+      .collection('allStd')
+      .doc(user.uid)
       .set(userModel.toMap());
-  Fluttertoast.showToast(msg: "Post Saved Successfully");
+  Fluttertoast.showToast(msg: "Data Saved Successfully");
 }

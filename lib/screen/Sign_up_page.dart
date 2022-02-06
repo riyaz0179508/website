@@ -1,16 +1,16 @@
 import 'dart:io';
-
 import 'package:alert_dialog/alert_dialog.dart';
-import 'package:beca_kena/helper/custom_button.dart';
-import 'package:beca_kena/helper/custom_text_form_field.dart';
-import 'package:beca_kena/model_provider_repo/model/user_model.dart';
-import 'package:beca_kena/screen/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../helper/custom_button.dart';
+import '../helper/custom_text_form_field.dart';
+import '../model_provider_repo/model/user_model.dart';
+import 'home_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);

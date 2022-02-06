@@ -1,9 +1,13 @@
-import 'package:beca_kena/helper/custom_button.dart';
-import 'package:beca_kena/helper/custom_text_form_field.dart';
-import 'package:beca_kena/screen/Sign_up_page.dart';
-import 'package:beca_kena/screen/home_page.dart';
-import 'package:beca_kena/helper/color.dart';
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../helper/color.dart';
+import '../helper/custom_button.dart';
+import '../helper/custom_text_form_field.dart';
+import 'Sign_up_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
