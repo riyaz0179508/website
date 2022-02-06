@@ -239,13 +239,7 @@ void signUp(String email, String password,
       Fluttertoast.showToast(msg: "SignUp Successful!"),
       Navigator.push(context,
           MaterialPageRoute(
-              builder: (context)=>HomePage(
-                img: "",
-                ponnoController: "",
-                conditionController: "",
-                priceController: "",
-
-              )))
+              builder: (context)=>HomePage()))
     }).catchError((e){
       Fluttertoast.showToast(msg:e.message);
 
@@ -275,7 +269,7 @@ void saveUserDetails() async{
   userModel.email= _emailController.text;
   userModel.phone= _phoneController.text;
   userModel.name= _nameController.text;
-  // userModel.dept= initValDept;
+
 
 
   await firestore123.collection("users").

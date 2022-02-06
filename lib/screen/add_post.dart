@@ -1,10 +1,14 @@
 
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:alert_dialog/alert_dialog.dart';
+import 'package:beca_kena/model_provider_repo/model/user_model.dart';
 import 'package:beca_kena/screen/home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddPost extends StatefulWidget {
@@ -16,7 +20,7 @@ class AddPost extends StatefulWidget {
 
 
 
-List<String> deptList=[
+List<String> categorytList=[
   "Freelancer",
   "Essential",
   "Vehicles",
@@ -30,30 +34,32 @@ List<String> deptList=[
   "Dress",
 ];
 String ? initValDept;
-
+final _auth= FirebaseAuth.instance;
+final GlobalKey<FormState> _formKey =GlobalKey();
 
 TextEditingController _locationController=TextEditingController();
-TextEditingController _nameController=TextEditingController();
+TextEditingController _sellertNameController=TextEditingController();
 TextEditingController _addressController=TextEditingController();
 TextEditingController _phoneNumberController=TextEditingController();
 TextEditingController _ponnoController=TextEditingController();
 TextEditingController _conditionController=TextEditingController();
 TextEditingController _priceController=TextEditingController();
 TextEditingController _descriptionController=TextEditingController();
+TextEditingController _categoryController=TextEditingController();
 
+File? image3;
 
 class _AddPostState extends State<AddPost> {
 
-  final _formKey=GlobalKey<FormState>();
 
-  File? image;
+
   Future pickImageFromGallery( source) async{
-    final image2= await ImagePicker().pickImage(
+    final image4= await ImagePicker().pickImage(
         source: source);
-    if(image2==null) return;
-    final tempImage= File(image2.path);
+    if(image4==null) return;
+    final tempImage= File(image4.path);
     setState(() {
-      image= tempImage;
+      image3= tempImage;
     });
   }
 
@@ -157,8 +163,8 @@ class _AddPostState extends State<AddPost> {
                       height: 200,
                       width: double.infinity,
 
-                      child: image!= null?
-                    Image.file(image!,
+                      child: image3!= null?
+                    Image.file(image3!,
                       fit: BoxFit.fitHeight,):
                     Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -200,35 +206,57 @@ class _AddPostState extends State<AddPost> {
                               borderRadius: BorderRadius.circular(10)
                           ),
                           child:
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: DropdownButton(
-                              iconDisabledColor: Colors.black,
-                              iconEnabledColor: Colors.black,
-                              iconSize: 30,
-                              hint:
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Text("Categories",
-                                  style: TextStyle(color: Colors.black,),),
-                              ),
-                              items: deptList.map(
-                                      (val) => DropdownMenuItem(
-                                      value: val,
-                                      child: Text(val,
-                                        style: TextStyle(color: Colors.black),
-                                      )
-                                  )
-                              ).toList(),
+                          TextFormField(
+                            validator: (value){
+                              if(value == null || value.isEmpty){
+                                return "Field is Empty";
+                              }
+                            },
+                            controller: _categoryController,
+                            cursorColor: Colors.grey,
 
-                              onChanged: (newVal){
-                                setState(() {
-                                  initValDept=newVal.toString();
-                                });
-                              },
-                              value: initValDept,
+                            decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey
+                                    ),
+                                    borderRadius: BorderRadius.circular(9)
+                                ),
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.grey
+                                    ),
+                                    borderRadius: BorderRadius.circular(8)
+
+                                ),
+                                prefixIcon:
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10, left: 15,),
+                                  child: DropdownButton(
+                                    alignment: Alignment.topLeft,
+                                    iconSize: 30,
+                                    // iconDisabledColor: Colors.grey,
+                                    // iconEnabledColor: Colors.grey,
+                                    hint: Text("ক্যাটাগরি"),
+                                    items: categorytList.map(
+                                            (val) => DropdownMenuItem(
+                                            value: val,
+                                            child: Text(val,
+                                            )
+                                        )
+                                    ).toList(),
+
+                                    onChanged: (newVal){
+                                      setState(() {
+                                        initValDept=newVal.toString();
+                                      });
+                                    },
+                                    value: initValDept,
+                                  ),
+                                ),
                             ),
                           ),
+
                         ),
                       ),
 
@@ -244,6 +272,11 @@ class _AddPostState extends State<AddPost> {
                         width: 190,
                         child:
                         TextFormField(
+                          validator: (value){
+                            if(value == null || value.isEmpty){
+                              return "Field is Empty";
+                            }
+                          },
                           controller: _locationController,
                           cursorColor: Colors.grey,
 
@@ -288,7 +321,12 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
-                    controller: _nameController,
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
+                    controller: _sellertNameController,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -325,6 +363,11 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _addressController,
                     keyboardType: TextInputType.multiline,
                     cursorColor: Colors.grey,
@@ -364,6 +407,11 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _phoneNumberController,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
@@ -403,6 +451,11 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _ponnoController,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
@@ -438,6 +491,11 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _conditionController,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
@@ -475,6 +533,11 @@ class _AddPostState extends State<AddPost> {
                   width: 380,
 
                   child: TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _priceController,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration(
@@ -510,6 +573,11 @@ class _AddPostState extends State<AddPost> {
 
                   child:
                   TextFormField(
+                    validator: (value){
+                      if(value == null || value.isEmpty){
+                        return "Field is Empty";
+                      }
+                    },
                     controller: _descriptionController,
                     keyboardType: TextInputType.multiline,
 
@@ -543,6 +611,7 @@ class _AddPostState extends State<AddPost> {
 
                           onPressed: (){
 
+                            Navigator.pop(context);
                           },
                           child: Text(" বাতিল")
                       ),
@@ -554,13 +623,7 @@ class _AddPostState extends State<AddPost> {
                           primary: Colors.green
                         ),
                           onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>
-                              HomePage(
-                                img: image!.path,
-                                ponnoController: _ponnoController.text,
-                                conditionController: _conditionController.text,
-                                priceController: _priceController.text,
-                              )));
+                            Submit;
                           },
                           child: Text("সাবমিট পোষ্ট")
                       ),
@@ -579,4 +642,64 @@ class _AddPostState extends State<AddPost> {
 
     );
   }
+}
+
+
+void Submit(String email, String password,
+    context,_formKey)async{
+  if(_formKey.currentState!.validate() && image3!=null){
+    await _auth.createUserWithEmailAndPassword
+      (email: email, password: password)
+        .then((value) => {
+      productDetails(),
+      saveImage(),
+      Navigator.push(context,
+          MaterialPageRoute(
+              builder: (context)=>HomePage()))
+    }).catchError((e){
+      Fluttertoast.showToast(msg:e.message);
+
+    });
+  }else{
+    Fluttertoast.showToast(msg: "Image can not be null");
+  }
+
+}
+
+
+void saveImage()async{
+  User? _product= FirebaseAuth.instance.currentUser;
+  if(image3==null)
+    return;
+  final destination= _product!.uid.toString();
+  final ref= FirebaseStorage.instance
+      .ref(destination);
+  ref.putFile(image3!);
+}
+
+
+void productDetails() async{
+  FirebaseFirestore firestore124=
+      FirebaseFirestore.instance;
+  User? product= _auth.currentUser;
+
+  UserModel userModel=UserModel();
+  userModel.uid=product!.uid;
+  userModel.sellerLocation= _locationController.text;
+  userModel.sellerName= _sellertNameController.text;
+  userModel.sellerAddress= _addressController.text;
+  userModel.sellerPhone= _phoneNumberController.text;
+  userModel.sellerPonno= _ponnoController.text;
+  userModel.sellerCondition= _conditionController.text;
+  userModel.sellerPrice= _priceController.text;
+  userModel.sellerDescription= _descriptionController.text;
+
+
+
+  await firestore124.collection("products").
+  doc(initValDept)
+      .collection('Product')
+      .doc(product.uid)
+      .set(userModel.toMap());
+  Fluttertoast.showToast(msg: "Post Saved Successfully");
 }

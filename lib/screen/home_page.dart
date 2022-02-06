@@ -9,21 +9,8 @@ import 'add_post.dart';
 
 class HomePage extends StatefulWidget {
 
-TextEditingController? emailController;
-  var img;
-String ponnoController;
-String conditionController;
-String priceController;
-
 
    HomePage({Key? key,
-
-
-
-     required this.img,
-     required this.ponnoController,
-     required this.conditionController,
-     required this.priceController,
 
 
    }) : super(key: key);
@@ -108,7 +95,7 @@ class _HomePageState extends State<HomePage> {
 
           Expanded(
             child: GridView.builder(
-              itemCount: 6,
+              itemCount: 15,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                    crossAxisSpacing: 1,
@@ -139,11 +126,11 @@ class _HomePageState extends State<HomePage> {
 
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(widget.ponnoController),
+                            child: Text(""),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: Text(widget.conditionController),
+                            child: Text(""),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8.0),
@@ -151,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               children: [
                                 Text("টা:"),
-                                Text(widget.priceController),
+                                Text(""),
                               ],
                             ),
                           ),

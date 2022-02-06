@@ -77,12 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     InkWell(
                       onTap: (){
                         if(_formKey.currentState!.validate());
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage(
-                          img: "",
-                          ponnoController: "",
-                          conditionController: "",
-                          priceController: "",
-                        )));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
                       },
                       child: CustomButton(
                         height: 50,
